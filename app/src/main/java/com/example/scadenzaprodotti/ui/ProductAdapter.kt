@@ -2,14 +2,17 @@ package com.example.scadenzaprodotti.ui
 
 import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.example.scadenzaprodotti.data.Product
 import com.example.scadenzaprodotti.databinding.ItemProductBinding
 import java.time.format.DateTimeFormatter
-import androidx.core.graphics.toColorInt
 
 class ProductAdapter(
     private val onItemClick: (Product) -> Unit
@@ -39,6 +42,16 @@ class ProductAdapter(
                 else -> "#C8E6C9".toColorInt()
             }
             binding.root.setCardBackgroundColor(bgColor)
+
+            if (product.imageUrl != null) {
+                binding.imageAvatar.visibility = View.VISIBLE
+                binding.imageAvatar.load(product.imageUrl) {
+                    transformations(CircleCropTransformation())
+                }
+            } else {
+                binding.imageAvatar.visibility = View.GONE
+            }
+
             binding.root.setOnClickListener { onItemClick(product) }
         }
     }

@@ -13,7 +13,8 @@ data class Product(
     val expiryDate: Long,
     val quantity: Int = 1,
     val notes: String? = null,
-    val daysBeforeNotify: Int = 3
+    val daysBeforeNotify: Int = 3,
+    val imageUrl: String?
 ) {
     val localExpiryDate: LocalDate get() = LocalDate.ofEpochDay(expiryDate)
 

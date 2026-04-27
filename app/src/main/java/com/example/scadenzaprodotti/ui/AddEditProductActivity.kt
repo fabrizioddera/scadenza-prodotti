@@ -2,10 +2,13 @@ package com.example.scadenzaprodotti.ui
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.example.scadenzaprodotti.data.Product
 import com.example.scadenzaprodotti.databinding.ActivityAddEditProductBinding
 import com.example.scadenzaprodotti.network.ProductLookupService
@@ -22,6 +25,7 @@ class AddEditProductActivity : AppCompatActivity() {
     private var selectedDate: LocalDate = LocalDate.now().plusMonths(1)
     private var editingProduct: Product? = null
     private var scannedBarcode: String? = null
+    private var currentImageUrl: String? = null
     private val dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
 
     private val barcodeLauncher = registerForActivityResult(ScanContract()) { result ->
@@ -69,14 +73,15 @@ class AddEditProductActivity : AppCompatActivity() {
         lifecycleScope.launch {
             binding.btnScanBarcode.isEnabled = false
             binding.textBarcode.text = "$barcode (ricerca in corso…)"
-            val name = ProductLookupService.lookupBarcode(barcode)
+            val product = ProductLookupService.lookupBarcode(barcode)
             binding.btnScanBarcode.isEnabled = true
             binding.textBarcode.text = barcode
-            if (name != null) {
+            if (product != null) {
                 if (binding.editName.text.isNullOrBlank()) {
-                    binding.editName.setText(name)
+                    binding.editName.setText(product.name)
                 }
-                Toast.makeText(this@AddEditProductActivity, "Trovato: $name", Toast.LENGTH_SHORT).show()
+                loadAvatar(product.url)
+                Toast.makeText(this@AddEditProductActivity, "Trovato: ${product.name}", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this@AddEditProductActivity, "Prodotto non trovato online", Toast.LENGTH_SHORT).show()
             }
@@ -91,7 +96,20 @@ class AddEditProductActivity : AppCompatActivity() {
         scannedBarcode = product.barcode
         binding.textBarcode.text = product.barcode ?: "Nessun barcode"
         selectedDate = product.localExpiryDate
+        loadAvatar(product.imageUrl)
         updateDateDisplay()
+    }
+
+    private fun loadAvatar(url: String?) {
+        currentImageUrl = url
+        if (url != null) {
+            binding.imageAvatar.visibility = View.VISIBLE
+            binding.imageAvatar.load(url) {
+                transformations(CircleCropTransformation())
+            }
+        } else {
+            binding.imageAvatar.visibility = View.GONE
+        }
     }
 
     private fun showDatePicker() {
@@ -120,6 +138,7 @@ class AddEditProductActivity : AppCompatActivity() {
         val quantity = binding.editQuantity.text.toString().toIntOrNull() ?: 1
         val daysNotify = binding.editDaysNotify.text.toString().toIntOrNull() ?: 3
         val notes = binding.editNotes.text.toString().trim().ifEmpty { null }
+        val imageUrl = currentImageUrl
 
         val product = Product(
             id = editingProduct?.id ?: 0,
@@ -128,7 +147,8 @@ class AddEditProductActivity : AppCompatActivity() {
             expiryDate = selectedDate.toEpochDay(),
             quantity = quantity,
             notes = notes,
-            daysBeforeNotify = daysNotify
+            daysBeforeNotify = daysNotify,
+            imageUrl = imageUrl
         )
         if (editingProduct != null) viewModel.update(product) else viewModel.insert(product)
         finish()

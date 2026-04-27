@@ -19,4 +19,6 @@ class ProductViewModel(app: Application) : AndroidViewModel(app) {
     fun delete(product: Product) = viewModelScope.launch { repo.delete(product) }
 
     suspend fun getProductById(id: Int): Product? = repo.getById(id)
+    suspend fun getAllProducts(): List<Product> = repo.getAllSync()
+    fun insertAll(products: List<Product>) = viewModelScope.launch { repo.insertAll(products) }
 }

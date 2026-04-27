@@ -10,4 +10,5 @@ class ProductRepository(private val dao: ProductDao) {
     suspend fun delete(product: Product) = dao.delete(product)
     suspend fun getById(id: Int): Product? = dao.getById(id)
     suspend fun getAllSync(): List<Product> = dao.getAllProductsSync()
+    suspend fun insertAll(products: List<Product>) = dao.insertAll(products)
 }
