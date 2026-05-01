@@ -1,4 +1,4 @@
-package com.example.scadenzaprodotti.data
+package com.fabrizioddera.scadenzaprodotti.data
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow

@@ -1,11 +1,11 @@
-package com.example.scadenzaprodotti.notifications
+package com.fabrizioddera.scadenzaprodotti.notifications
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import androidx.core.app.NotificationCompat
-import com.example.scadenzaprodotti.R
-import com.example.scadenzaprodotti.data.Product
+import com.fabrizioddera.scadenzaprodotti.R
+import com.fabrizioddera.scadenzaprodotti.data.Product
 
 object NotificationHelper {
     private const val CHANNEL_ID = "expiry_channel"

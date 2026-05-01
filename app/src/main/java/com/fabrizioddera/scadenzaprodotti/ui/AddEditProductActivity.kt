@@ -1,4 +1,4 @@
-package com.example.scadenzaprodotti.ui
+package com.fabrizioddera.scadenzaprodotti.ui
 
 import android.app.DatePickerDialog
 import android.os.Bundle
@@ -6,13 +6,14 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import coil.load
 import coil.transform.CircleCropTransformation
-import com.example.scadenzaprodotti.data.Product
-import com.example.scadenzaprodotti.databinding.ActivityAddEditProductBinding
-import com.example.scadenzaprodotti.network.ProductLookupService
-import com.example.scadenzaprodotti.viewmodel.ProductViewModel
+import com.fabrizioddera.scadenzaprodotti.data.Product
+import com.fabrizioddera.scadenzaprodotti.databinding.ActivityAddEditProductBinding
+import com.fabrizioddera.scadenzaprodotti.network.ProductLookupService
+import com.fabrizioddera.scadenzaprodotti.viewmodel.ProductViewModel
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
 import kotlinx.coroutines.launch
@@ -38,6 +39,7 @@ class AddEditProductActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, true)
         binding = ActivityAddEditProductBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

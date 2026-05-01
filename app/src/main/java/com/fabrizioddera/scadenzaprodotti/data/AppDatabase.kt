@@ -1,4 +1,4 @@
-package com.example.scadenzaprodotti.data
+package com.fabrizioddera.scadenzaprodotti.data
 
 import android.content.Context
 import androidx.room.Database

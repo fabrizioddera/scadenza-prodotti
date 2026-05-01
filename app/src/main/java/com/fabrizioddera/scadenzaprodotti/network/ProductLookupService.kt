@@ -1,6 +1,6 @@
-package com.example.scadenzaprodotti.network
+package com.fabrizioddera.scadenzaprodotti.network
 
-import com.example.scadenzaprodotti.dto.ProductDto
+import com.fabrizioddera.scadenzaprodotti.dto.ProductDto
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient

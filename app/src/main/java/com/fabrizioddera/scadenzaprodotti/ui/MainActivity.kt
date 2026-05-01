@@ -1,4 +1,4 @@
-package com.example.scadenzaprodotti.ui
+package com.fabrizioddera.scadenzaprodotti.ui
 
 import android.Manifest
 import android.content.Intent
@@ -11,14 +11,15 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.scadenzaprodotti.R
-import com.example.scadenzaprodotti.data.BackupManager
-import com.example.scadenzaprodotti.databinding.ActivityMainBinding
-import com.example.scadenzaprodotti.viewmodel.ProductViewModel
+import com.fabrizioddera.scadenzaprodotti.R
+import com.fabrizioddera.scadenzaprodotti.data.BackupManager
+import com.fabrizioddera.scadenzaprodotti.databinding.ActivityMainBinding
+import com.fabrizioddera.scadenzaprodotti.viewmodel.ProductViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -88,6 +89,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, true)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

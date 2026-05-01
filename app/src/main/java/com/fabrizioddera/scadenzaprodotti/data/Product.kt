@@ -1,4 +1,4 @@
-package com.example.scadenzaprodotti.data
+package com.fabrizioddera.scadenzaprodotti.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

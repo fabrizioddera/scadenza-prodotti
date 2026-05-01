@@ -1,9 +1,9 @@
-package com.example.scadenzaprodotti.notifications
+package com.fabrizioddera.scadenzaprodotti.notifications
 
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.example.scadenzaprodotti.data.AppDatabase
+import com.fabrizioddera.scadenzaprodotti.data.AppDatabase
 
 class ExpiryCheckWorker(context: Context, params: WorkerParameters) :
     CoroutineWorker(context, params) {

@@ -1,13 +1,13 @@
-package com.example.scadenzaprodotti.viewmodel
+package com.fabrizioddera.scadenzaprodotti.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.scadenzaprodotti.data.AppDatabase
-import com.example.scadenzaprodotti.data.Product
-import com.example.scadenzaprodotti.data.ProductRepository
+import com.fabrizioddera.scadenzaprodotti.data.AppDatabase
+import com.fabrizioddera.scadenzaprodotti.data.Product
+import com.fabrizioddera.scadenzaprodotti.data.ProductRepository
 import kotlinx.coroutines.launch
 
 class ProductViewModel(app: Application) : AndroidViewModel(app) {

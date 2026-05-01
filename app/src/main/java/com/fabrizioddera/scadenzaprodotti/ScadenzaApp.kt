@@ -1,11 +1,11 @@
-package com.example.scadenzaprodotti
+package com.fabrizioddera.scadenzaprodotti
 
 import android.app.Application
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.example.scadenzaprodotti.notifications.ExpiryCheckWorker
-import com.example.scadenzaprodotti.notifications.NotificationHelper
+import com.fabrizioddera.scadenzaprodotti.notifications.ExpiryCheckWorker
+import com.fabrizioddera.scadenzaprodotti.notifications.NotificationHelper
 import java.util.concurrent.TimeUnit
 
 class ScadenzaApp : Application() {

@@ -1,4 +1,4 @@
-package com.example.scadenzaprodotti.ui
+package com.fabrizioddera.scadenzaprodotti.ui
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.CircleCropTransformation
-import com.example.scadenzaprodotti.R
-import com.example.scadenzaprodotti.data.Product
-import com.example.scadenzaprodotti.databinding.ItemProductBinding
+import com.fabrizioddera.scadenzaprodotti.R
+import com.fabrizioddera.scadenzaprodotti.data.Product
+import com.fabrizioddera.scadenzaprodotti.databinding.ItemProductBinding
 import java.time.format.DateTimeFormatter
 
 class ProductAdapter(
