@@ -14,9 +14,22 @@ data class Product(
     val quantity: Int = 1,
     val notes: String? = null,
     val daysBeforeNotify: Int = 3,
-    val imageUrl: String?
+    val imageUrl: String?,
+    val openedDate: Long? = null,
+    val daysUntilBadAfterOpening: Int? = null
 ) {
     val localExpiryDate: LocalDate get() = LocalDate.ofEpochDay(expiryDate)
 
-    val daysUntilExpiry: Long get() = ChronoUnit.DAYS.between(LocalDate.now(), localExpiryDate)
+    val isOpened: Boolean get() = openedDate != null
+
+    val openedLocalDate: LocalDate? get() = openedDate?.let { LocalDate.ofEpochDay(it) }
+
+    val effectiveExpiryDate: LocalDate get() {
+        val openExpiry = if (openedDate != null && daysUntilBadAfterOpening != null) {
+            LocalDate.ofEpochDay(openedDate).plusDays(daysUntilBadAfterOpening.toLong())
+        } else null
+        return if (openExpiry != null && openExpiry.isBefore(localExpiryDate)) openExpiry else localExpiryDate
+    }
+
+    val daysUntilExpiry: Long get() = ChronoUnit.DAYS.between(LocalDate.now(), effectiveExpiryDate)
 }

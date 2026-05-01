@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
+    <!-- Brand palette -->
+    <color name="green_900">#FF1B5E20</color>
+    <color name="green_700">#FF388E3C</color>
+    <color name="green_500">#FF4CAF50</color>
+    <color name="green_200">#FFA5D6A7</color>
+    <color name="amber_700">#FFFF8F00</color>
+    <color name="amber_400">#FFFFCA28</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="surface">#FFFFFFFF</color>
+    <color name="background">#FFF1F8E9</color>
+
+    <!-- Status card backgrounds (pastel) -->
+    <color name="status_expired_bg">#FFFFEBEE</color>
+    <color name="status_warning_bg">#FFFFF8E1</color>
+    <color name="status_ok_bg">#FFF1F8E9</color>
+
+    <!-- Status stripe / text colors -->
+    <color name="status_expired_stripe">#FFE53935</color>
+    <color name="status_warning_stripe">#FFFB8C00</color>
+    <color name="status_ok_stripe">#FF43A047</color>
 </resources>

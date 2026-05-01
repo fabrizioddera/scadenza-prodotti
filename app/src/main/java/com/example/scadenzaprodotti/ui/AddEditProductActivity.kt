@@ -93,6 +93,7 @@ class AddEditProductActivity : AppCompatActivity() {
         binding.editQuantity.setText(product.quantity.toString())
         binding.editNotes.setText(product.notes ?: "")
         binding.editDaysNotify.setText(product.daysBeforeNotify.toString())
+        binding.editDaysAfterOpening.setText(product.daysUntilBadAfterOpening?.toString() ?: "")
         scannedBarcode = product.barcode
         binding.textBarcode.text = product.barcode ?: "Nessun barcode"
         selectedDate = product.localExpiryDate
@@ -137,6 +138,7 @@ class AddEditProductActivity : AppCompatActivity() {
         }
         val quantity = binding.editQuantity.text.toString().toIntOrNull() ?: 1
         val daysNotify = binding.editDaysNotify.text.toString().toIntOrNull() ?: 3
+        val daysAfterOpening = binding.editDaysAfterOpening.text.toString().toIntOrNull()
         val notes = binding.editNotes.text.toString().trim().ifEmpty { null }
         val imageUrl = currentImageUrl
 
@@ -148,7 +150,9 @@ class AddEditProductActivity : AppCompatActivity() {
             quantity = quantity,
             notes = notes,
             daysBeforeNotify = daysNotify,
-            imageUrl = imageUrl
+            imageUrl = imageUrl,
+            openedDate = editingProduct?.openedDate,
+            daysUntilBadAfterOpening = daysAfterOpening
         )
         if (editingProduct != null) viewModel.update(product) else viewModel.insert(product)
         finish()

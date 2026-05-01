@@ -42,9 +42,17 @@ class MainActivity : AppCompatActivity() {
                 val products = viewModel.getAllProducts()
                 val json = BackupManager.toJson(products)
                 contentResolver.openOutputStream(uri)?.use { it.write(json.toByteArray()) }
-                Toast.makeText(this@MainActivity, "Backup salvato (${products.size} prodotti)", Toast.LENGTH_SHORT).show()
-            } catch (e: Exception) {
-                Toast.makeText(this@MainActivity, "Errore durante l'esportazione", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@MainActivity,
+                    "Backup salvato (${products.size} prodotti)",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } catch (_: Exception) {
+                Toast.makeText(
+                    this@MainActivity,
+                    "Errore durante l'esportazione",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -63,12 +71,17 @@ class MainActivity : AppCompatActivity() {
                     .setMessage("Trovati ${products.size} prodotti. Vuoi aggiungerli a quelli esistenti?")
                     .setPositiveButton("Aggiungi") { _, _ ->
                         viewModel.insertAll(products)
-                        Toast.makeText(this@MainActivity, "${products.size} prodotti importati", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@MainActivity,
+                            "${products.size} prodotti importati",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                     .setNegativeButton("Annulla", null)
                     .show()
-            } catch (e: Exception) {
-                Toast.makeText(this@MainActivity, "File non valido o corrotto", Toast.LENGTH_SHORT).show()
+            } catch (_: Exception) {
+                Toast.makeText(this@MainActivity, "File non valido o corrotto", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
@@ -101,31 +114,53 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_export -> {
-                val fileName = "scadenze_${LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))}.json"
+                val fileName = "scadenze_${
+                    LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
+                }.json"
                 exportLauncher.launch(fileName)
                 true
             }
+
             R.id.action_import -> {
                 importLauncher.launch(arrayOf("application/json", "text/plain"))
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
 
     private fun setupRecyclerView() {
-        adapter = ProductAdapter { product ->
-            startActivity(
-                Intent(this, AddEditProductActivity::class.java).apply {
-                    putExtra(AddEditProductActivity.EXTRA_PRODUCT_ID, product.id)
+        adapter = ProductAdapter(
+            onItemClick = { product ->
+                startActivity(
+                    Intent(this, AddEditProductActivity::class.java).apply {
+                        putExtra(AddEditProductActivity.EXTRA_PRODUCT_ID, product.id)
+                    }
+                )
+            },
+            onMarkOpened = { product ->
+                val opened = product.copy(openedDate = LocalDate.now().toEpochDay())
+                viewModel.update(opened)
+                val msg = if (product.daysUntilBadAfterOpening != null) {
+                    "${product.name} aperto · scade tra ${opened.daysUntilExpiry} giorni"
+                } else {
+                    "${product.name} segnato come aperto"
                 }
-            )
-        }
+                Snackbar.make(binding.root, msg, Snackbar.LENGTH_LONG)
+                    .setAction("Annulla") { viewModel.update(product.copy(openedDate = null)) }
+                    .show()
+            }
+        )
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
 
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-            override fun onMove(rv: RecyclerView, vh: RecyclerView.ViewHolder, t: RecyclerView.ViewHolder) = false
+            override fun onMove(
+                rv: RecyclerView,
+                vh: RecyclerView.ViewHolder,
+                t: RecyclerView.ViewHolder
+            ) = false
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val product = adapter.getProductAt(viewHolder.bindingAdapterPosition)
