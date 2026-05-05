@@ -11,7 +11,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,9 +25,14 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 class MainActivity : AppCompatActivity() {
+    companion object {
+        const val EXTRA_SHOW_EXPIRING = "show_expiring"
+    }
+
     private lateinit var binding: ActivityMainBinding
     private val viewModel: ProductViewModel by viewModels()
     private lateinit var adapter: ProductAdapter
+    private var showExpiringOnly = false
 
     private val notifPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -89,10 +93,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, true)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.toolbar)
+        showExpiringOnly = intent.getBooleanExtra(EXTRA_SHOW_EXPIRING, false)
         setupRecyclerView()
         observeProducts()
 
@@ -179,11 +184,27 @@ class MainActivity : AppCompatActivity() {
         }).attachToRecyclerView(binding.recyclerView)
     }
 
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        showExpiringOnly = intent.getBooleanExtra(EXTRA_SHOW_EXPIRING, false)
+        viewModel.products.value?.let { applyProductList(it) }
+    }
+
     private fun observeProducts() {
         viewModel.products.observe(this) { products ->
-            adapter.submitList(products)
-            binding.emptyView.visibility =
-                if (products.isEmpty()) android.view.View.VISIBLE else android.view.View.GONE
+            applyProductList(products)
         }
+    }
+
+    private fun applyProductList(products: List<com.fabrizioddera.scadenzaprodotti.data.Product>) {
+        val list = if (showExpiringOnly) {
+            products.filter { it.daysUntilExpiry <= it.daysBeforeNotify }
+        } else {
+            products
+        }
+        adapter.submitList(list)
+        binding.emptyView.visibility =
+            if (list.isEmpty()) android.view.View.VISIBLE else android.view.View.GONE
     }
 }
