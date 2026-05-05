@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Nessun prodotto"
+            android:text="@string/text_no_products"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Premi + per aggiungerne uno"
+            android:text="@string/text_add_first_product"
             android:textAlignment="center"
             android:textColor="?android:attr/textColorSecondary"
             android:textSize="14sp" />
@@ -53,8 +53,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:contentDescription="Aggiungi prodotto"
-        android:text="Aggiungi"
+        android:contentDescription="@string/content_desc_add_product"
+        android:text="@string/btn_add_product"
         app:icon="@android:drawable/ic_input_add" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

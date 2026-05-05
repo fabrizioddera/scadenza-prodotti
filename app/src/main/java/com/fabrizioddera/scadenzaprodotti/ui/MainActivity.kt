@@ -45,13 +45,13 @@ class MainActivity : AppCompatActivity() {
                 contentResolver.openOutputStream(uri)?.use { it.write(json.toByteArray()) }
                 Toast.makeText(
                     this@MainActivity,
-                    "Backup salvato (${products.size} prodotti)",
+                    getString(R.string.toast_backup_saved, products.size),
                     Toast.LENGTH_SHORT
                 ).show()
             } catch (_: Exception) {
                 Toast.makeText(
                     this@MainActivity,
-                    "Errore durante l'esportazione",
+                    getString(R.string.toast_export_error),
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -68,20 +68,20 @@ class MainActivity : AppCompatActivity() {
                     ?: return@launch
                 val products = BackupManager.fromJson(json)
                 AlertDialog.Builder(this@MainActivity)
-                    .setTitle("Importa backup")
-                    .setMessage("Trovati ${products.size} prodotti. Vuoi aggiungerli a quelli esistenti?")
-                    .setPositiveButton("Aggiungi") { _, _ ->
+                    .setTitle(getString(R.string.action_import))
+                    .setMessage(getString(R.string.dialog_import_message, products.size))
+                    .setPositiveButton(getString(R.string.btn_add_product)) { _, _ ->
                         viewModel.insertAll(products)
                         Toast.makeText(
                             this@MainActivity,
-                            "${products.size} prodotti importati",
+                            getString(R.string.toast_backup_saved, products.size),
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                    .setNegativeButton("Annulla", null)
+                    .setNegativeButton(getString(R.string.btn_cancel), null)
                     .show()
             } catch (_: Exception) {
-                Toast.makeText(this@MainActivity, "File non valido o corrotto", Toast.LENGTH_SHORT)
+                Toast.makeText(this@MainActivity, getString(R.string.toast_invalid_file), Toast.LENGTH_SHORT)
                     .show()
             }
         }
@@ -128,6 +128,11 @@ class MainActivity : AppCompatActivity() {
                 true
             }
 
+            R.id.action_settings -> {
+                startActivity(Intent(this, SettingsActivity::class.java))
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -145,12 +150,12 @@ class MainActivity : AppCompatActivity() {
                 val opened = product.copy(openedDate = LocalDate.now().toEpochDay())
                 viewModel.update(opened)
                 val msg = if (product.daysUntilBadAfterOpening != null) {
-                    "${product.name} aperto · scade tra ${opened.daysUntilExpiry} giorni"
+                    getString(R.string.snack_product_opened_with_expiry, product.name, opened.daysUntilExpiry)
                 } else {
-                    "${product.name} segnato come aperto"
+                    getString(R.string.snack_product_opened, product.name)
                 }
                 Snackbar.make(binding.root, msg, Snackbar.LENGTH_LONG)
-                    .setAction("Annulla") { viewModel.update(product.copy(openedDate = null)) }
+                    .setAction(getString(R.string.btn_cancel)) { viewModel.update(product.copy(openedDate = null)) }
                     .show()
             }
         )
@@ -167,8 +172,8 @@ class MainActivity : AppCompatActivity() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val product = adapter.getProductAt(viewHolder.bindingAdapterPosition)
                 viewModel.delete(product)
-                Snackbar.make(binding.root, "${product.name} eliminato", Snackbar.LENGTH_LONG)
-                    .setAction("Annulla") { viewModel.insert(product) }
+                Snackbar.make(binding.root, getString(R.string.snack_product_deleted, product.name), Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.btn_cancel)) { viewModel.insert(product) }
                     .show()
             }
         }).attachToRecyclerView(binding.recyclerView)

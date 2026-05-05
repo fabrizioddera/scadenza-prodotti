@@ -1,6 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Scadenza Prodotti</string>
+
+    <!-- Menu -->
     <string name="action_export">Esporta backup</string>
     <string name="action_import">Importa backup</string>
+    <string name="action_settings">Impostazioni</string>
+
+    <!-- Impostazioni -->
+    <string name="settings_title">Impostazioni</string>
+    <string name="settings_check_time_label">Orario controllo scadenze</string>
+    <string name="settings_pick_time">Scegli orario</string>
+
+    <!-- Pulsanti comuni -->
+    <string name="btn_save">Salva</string>
+    <string name="btn_cancel">Annulla</string>
+    <string name="btn_add_product">Aggiungi</string>
+
+    <!-- Schermata principale -->
+    <string name="text_no_products">Nessun prodotto</string>
+    <string name="text_add_first_product">Premi + per aggiungerne uno</string>
+    <string name="content_desc_add_product">Aggiungi prodotto</string>
+
+    <!-- Snackbar / Toast MainActivity -->
+    <string name="toast_backup_saved">Backup salvato (%1$d prodotti)</string>
+    <string name="toast_export_error">Errore durante l\'esportazione</string>
+    <string name="dialog_import_message">Trovati %1$d prodotti. Vuoi aggiungerli a quelli esistenti?</string>
+    <string name="toast_invalid_file">File non valido o corrotto</string>
+    <string name="snack_product_opened_with_expiry">%1$s aperto · scade tra %2$d giorni</string>
+    <string name="snack_product_opened">%1$s segnato come aperto</string>
+    <string name="snack_product_deleted">%1$s eliminato</string>
+
+    <!-- Aggiungi / Modifica prodotto -->
+    <string name="title_add_product">Aggiungi prodotto</string>
+    <string name="title_edit_product">Modifica prodotto</string>
+    <string name="hint_product_name">Nome prodotto *</string>
+    <string name="label_barcode">Barcode</string>
+    <string name="text_no_barcode">Nessun barcode</string>
+    <string name="btn_scan">Scansiona</string>
+    <string name="barcode_scanner_prompt">Inquadra il barcode del prodotto</string>
+    <string name="barcode_searching">%1$s (ricerca in corso…)</string>
+    <string name="toast_product_found">Trovato: %1$s</string>
+    <string name="toast_product_not_found">Prodotto non trovato online</string>
+    <string name="toast_enter_name">Inserisci il nome del prodotto</string>
+    <string name="label_expiry_date">Data di scadenza</string>
+    <string name="btn_pick_date">Scegli data</string>
+    <string name="hint_quantity">Quantità</string>
+    <string name="hint_days_before_notify">Giorni prima della notifica</string>
+    <string name="hint_days_after_opening">Giorni validità dopo apertura (opzionale)</string>
+    <string name="hint_notes">Note (opzionale)</string>
+    <string name="content_desc_product_image">Immagine prodotto</string>
+
+    <!-- Lista prodotti -->
+    <string name="product_expiry">Scade: %1$s</string>
+    <string name="product_quantity">Qtà: %1$d</string>
+    <string name="status_expired">Scaduto %1$d giorni fa</string>
+    <string name="status_expires_today">Scade oggi!</string>
+    <string name="status_expires_tomorrow">Scade domani</string>
+    <string name="status_expires_in">Scade tra %1$d giorni</string>
+    <string name="btn_mark_opened">Segna aperto</string>
+    <string name="product_opened_with_expiry">Aperto il %1$s · scade %2$s</string>
+    <string name="product_opened">Aperto il %1$s</string>
+
+    <!-- Notifiche -->
+    <string name="notification_channel_name">Scadenze prodotti</string>
+    <string name="notification_channel_description">Notifiche per prodotti in scadenza</string>
+    <string name="notification_title">Prodotto in scadenza</string>
+    <string name="notification_expired">%1$s è scaduto %2$d giorni fa</string>
+    <string name="notification_expires_today">%1$s scade oggi!</string>
+    <string name="notification_expires_in">%1$s scade tra %2$d giorni</string>
 </resources>

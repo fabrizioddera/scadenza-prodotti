@@ -25,19 +25,19 @@ class ProductAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(product: Product) {
+            val ctx = binding.root.context
             binding.textName.text = product.name
-            binding.textExpiry.text = "Scade: ${product.effectiveExpiryDate.format(dateFormatter)}"
-            binding.textQuantity.text = "Qtà: ${product.quantity}"
+            binding.textExpiry.text = ctx.getString(R.string.product_expiry, product.effectiveExpiryDate.format(dateFormatter))
+            binding.textQuantity.text = ctx.getString(R.string.product_quantity, product.quantity)
 
             val days = product.daysUntilExpiry
             binding.textDaysLeft.text = when {
-                days < 0 -> "Scaduto ${-days} giorni fa"
-                days == 0L -> "Scade oggi!"
-                days == 1L -> "Scade domani"
-                else -> "Scade tra $days giorni"
+                days < 0 -> ctx.getString(R.string.status_expired, (-days).toInt())
+                days == 0L -> ctx.getString(R.string.status_expires_today)
+                days == 1L -> ctx.getString(R.string.status_expires_tomorrow)
+                else -> ctx.getString(R.string.status_expires_in, days.toInt())
             }
 
-            val ctx = binding.root.context
             val (bgColor, stripeColor, textColor) = when {
                 days < 0 -> Triple(
                     ContextCompat.getColor(ctx, R.color.status_expired_bg),
@@ -63,9 +63,9 @@ class ProductAdapter(
                 val openedStr = product.openedLocalDate!!.format(dateFormatter)
                 binding.textOpenedInfo.visibility = View.VISIBLE
                 binding.textOpenedInfo.text = if (product.daysUntilBadAfterOpening != null) {
-                    "Aperto il $openedStr · scade ${product.effectiveExpiryDate.format(dateFormatter)}"
+                    ctx.getString(R.string.product_opened_with_expiry, openedStr, product.effectiveExpiryDate.format(dateFormatter))
                 } else {
-                    "Aperto il $openedStr"
+                    ctx.getString(R.string.product_opened, openedStr)
                 }
                 binding.btnMarkOpened.visibility = View.GONE
             } else {

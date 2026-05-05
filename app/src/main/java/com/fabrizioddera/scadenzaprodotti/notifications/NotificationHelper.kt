@@ -13,10 +13,10 @@ object NotificationHelper {
     fun createChannel(context: Context) {
         val channel = NotificationChannel(
             CHANNEL_ID,
-            "Scadenze prodotti",
+            context.getString(R.string.notification_channel_name),
             NotificationManager.IMPORTANCE_DEFAULT
         ).apply {
-            description = "Notifiche per prodotti in scadenza"
+            description = context.getString(R.string.notification_channel_description)
         }
         context.getSystemService(NotificationManager::class.java)?.createNotificationChannel(channel)
     }
@@ -24,13 +24,13 @@ object NotificationHelper {
     fun showExpiryNotification(context: Context, product: Product) {
         val days = product.daysUntilExpiry
         val message = when {
-            days < 0 -> "${product.name} è scaduto ${-days} giorni fa"
-            days == 0L -> "${product.name} scade oggi!"
-            else -> "${product.name} scade tra $days giorni"
+            days < 0 -> context.getString(R.string.notification_expired, product.name, (-days).toInt())
+            days == 0L -> context.getString(R.string.notification_expires_today, product.name)
+            else -> context.getString(R.string.notification_expires_in, product.name, days.toInt())
         }
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
-            .setContentTitle("Prodotto in scadenza")
+            .setContentTitle(context.getString(R.string.notification_title))
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setAutoCancel(true)

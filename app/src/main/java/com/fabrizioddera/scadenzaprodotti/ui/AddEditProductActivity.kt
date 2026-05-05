@@ -10,6 +10,7 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import coil.load
 import coil.transform.CircleCropTransformation
+import com.fabrizioddera.scadenzaprodotti.R
 import com.fabrizioddera.scadenzaprodotti.data.Product
 import com.fabrizioddera.scadenzaprodotti.databinding.ActivityAddEditProductBinding
 import com.fabrizioddera.scadenzaprodotti.network.ProductLookupService
@@ -46,7 +47,7 @@ class AddEditProductActivity : AppCompatActivity() {
 
         val productId = intent.getIntExtra(EXTRA_PRODUCT_ID, -1)
         if (productId != -1) {
-            title = "Modifica prodotto"
+            title = getString(R.string.title_edit_product)
             lifecycleScope.launch {
                 viewModel.getProductById(productId)?.let { product ->
                     editingProduct = product
@@ -54,14 +55,14 @@ class AddEditProductActivity : AppCompatActivity() {
                 }
             }
         } else {
-            title = "Aggiungi prodotto"
+            title = getString(R.string.title_add_product)
         }
 
         updateDateDisplay()
 
         binding.btnScanBarcode.setOnClickListener {
             barcodeLauncher.launch(ScanOptions().apply {
-                setPrompt("Inquadra il barcode del prodotto")
+                setPrompt(getString(R.string.barcode_scanner_prompt))
                 setBeepEnabled(true)
                 setOrientationLocked(true)
             })
@@ -74,7 +75,7 @@ class AddEditProductActivity : AppCompatActivity() {
     private fun lookupProductOnline(barcode: String) {
         lifecycleScope.launch {
             binding.btnScanBarcode.isEnabled = false
-            binding.textBarcode.text = "$barcode (ricerca in corso…)"
+            binding.textBarcode.text = getString(R.string.barcode_searching, barcode)
             val product = ProductLookupService.lookupBarcode(barcode)
             binding.btnScanBarcode.isEnabled = true
             binding.textBarcode.text = barcode
@@ -83,9 +84,9 @@ class AddEditProductActivity : AppCompatActivity() {
                     binding.editName.setText(product.name)
                 }
                 loadAvatar(product.url)
-                Toast.makeText(this@AddEditProductActivity, "Trovato: ${product.name}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@AddEditProductActivity, getString(R.string.toast_product_found, product.name), Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this@AddEditProductActivity, "Prodotto non trovato online", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@AddEditProductActivity, getString(R.string.toast_product_not_found), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -97,7 +98,7 @@ class AddEditProductActivity : AppCompatActivity() {
         binding.editDaysNotify.setText(product.daysBeforeNotify.toString())
         binding.editDaysAfterOpening.setText(product.daysUntilBadAfterOpening?.toString() ?: "")
         scannedBarcode = product.barcode
-        binding.textBarcode.text = product.barcode ?: "Nessun barcode"
+        binding.textBarcode.text = product.barcode ?: getString(R.string.text_no_barcode)
         selectedDate = product.localExpiryDate
         loadAvatar(product.imageUrl)
         updateDateDisplay()
@@ -135,7 +136,7 @@ class AddEditProductActivity : AppCompatActivity() {
     private fun saveProduct() {
         val name = binding.editName.text.toString().trim()
         if (name.isEmpty()) {
-            Toast.makeText(this, "Inserisci il nome del prodotto", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.toast_enter_name), Toast.LENGTH_SHORT).show()
             return
         }
         val quantity = binding.editQuantity.text.toString().toIntOrNull() ?: 1
