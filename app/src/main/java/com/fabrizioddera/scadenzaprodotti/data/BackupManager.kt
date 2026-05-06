@@ -15,6 +15,7 @@ object BackupManager {
             obj.put("quantity", p.quantity)
             obj.put("notes", p.notes ?: JSONObject.NULL)
             obj.put("daysBeforeNotify", p.daysBeforeNotify)
+            obj.put("imageUrl", p.imageUrl ?: JSONObject.NULL)
             obj.put("openedDate", p.openedDate ?: JSONObject.NULL)
             obj.put("daysUntilBadAfterOpening", p.daysUntilBadAfterOpening ?: JSONObject.NULL)
             array.put(obj)

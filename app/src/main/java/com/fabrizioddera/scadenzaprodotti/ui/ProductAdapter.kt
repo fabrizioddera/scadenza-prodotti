@@ -16,7 +16,8 @@ import java.time.format.DateTimeFormatter
 
 class ProductAdapter(
     private val onItemClick: (Product) -> Unit,
-    private val onMarkOpened: (Product) -> Unit
+    private val onMarkOpened: (Product) -> Unit,
+    private val onDelete: (Product) -> Unit
 ) : ListAdapter<Product, ProductAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     private val dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
@@ -83,6 +84,7 @@ class ProductAdapter(
                 binding.imageAvatar.visibility = View.GONE
             }
 
+            binding.btnDelete.setOnClickListener { onDelete(product) }
             binding.root.setOnClickListener { onItemClick(product) }
         }
     }

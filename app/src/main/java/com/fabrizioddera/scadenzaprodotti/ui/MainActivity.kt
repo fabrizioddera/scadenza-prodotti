@@ -162,6 +162,12 @@ class MainActivity : AppCompatActivity() {
                 Snackbar.make(binding.root, msg, Snackbar.LENGTH_LONG)
                     .setAction(getString(R.string.btn_cancel)) { viewModel.update(product.copy(openedDate = null)) }
                     .show()
+            },
+            onDelete = { product ->
+                viewModel.delete(product)
+                Snackbar.make(binding.root, getString(R.string.snack_product_deleted, product.name), Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.btn_cancel)) { viewModel.insert(product) }
+                    .show()
             }
         )
         binding.recyclerView.layoutManager = LinearLayoutManager(this)

@@ -92,9 +92,17 @@ class AddEditProductActivity : AppCompatActivity() {
                     binding.editName.setText(product.name)
                 }
                 loadAvatar(product.url)
-                Toast.makeText(this@AddEditProductActivity, getString(R.string.toast_product_found, product.name), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@AddEditProductActivity,
+                    getString(R.string.toast_product_found, product.name),
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
-                Toast.makeText(this@AddEditProductActivity, getString(R.string.toast_product_not_found), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@AddEditProductActivity,
+                    getString(R.string.toast_product_not_found),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -102,7 +110,7 @@ class AddEditProductActivity : AppCompatActivity() {
     private fun populateFields(product: Product) {
         binding.editName.setText(product.name)
         binding.editQuantity.setText(product.quantity.toString())
-        binding.editNotes.setText(product.notes ?: "")
+        binding.editNotes.setText(product.notes?.takeIf { it.isNotEmpty() && it != "null" } ?: "")
         binding.editDaysNotify.setText(product.daysBeforeNotify.toString())
         binding.editDaysAfterOpening.setText(product.daysUntilBadAfterOpening?.toString() ?: "")
         scannedBarcode = product.barcode
@@ -113,10 +121,10 @@ class AddEditProductActivity : AppCompatActivity() {
     }
 
     private fun loadAvatar(url: String?) {
-        currentImageUrl = url
-        if (url != null) {
+        currentImageUrl = url?.takeIf { it.isNotEmpty() }
+        if (!currentImageUrl.isNullOrEmpty()) {
             binding.imageAvatar.visibility = View.VISIBLE
-            binding.imageAvatar.load(url) {
+            binding.imageAvatar.load(currentImageUrl) {
                 transformations(CircleCropTransformation())
             }
         } else {

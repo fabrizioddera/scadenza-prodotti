@@ -92,6 +92,16 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <ImageView
+                android:id="@+id/imageAvatar"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                android:contentDescription="@string/content_desc_product_image"
+                android:scaleType="centerCrop"
+                android:visibility="gone" />
+
             <!-- Date section -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
@@ -167,16 +177,6 @@
                     android:inputType="number"
                     android:text="3" />
             </com.google.android.material.textfield.TextInputLayout>
-
-            <ImageView
-                android:id="@+id/imageAvatar"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="12dp"
-                android:contentDescription="@string/content_desc_product_image"
-                android:scaleType="centerCrop"
-                android:visibility="gone" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"

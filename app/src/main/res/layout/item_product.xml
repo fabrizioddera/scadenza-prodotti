@@ -110,7 +110,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnMarkOpened"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        style="@style/Widget.MaterialComponents.Button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:minHeight="0dp"
@@ -119,6 +119,21 @@
                         android:text="@string/btn_mark_opened"
                         android:textSize="11sp"
                         android:visibility="gone" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnDelete"
+                        style="@style/Widget.MaterialComponents.Button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:minHeight="0dp"
+                        android:minWidth="0dp"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="4dp"
+                        app:backgroundTint="#D32F2F"
+                        app:icon="@drawable/ic_delete"
+                        app:iconGravity="textStart"
+                        app:iconPadding="0dp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
