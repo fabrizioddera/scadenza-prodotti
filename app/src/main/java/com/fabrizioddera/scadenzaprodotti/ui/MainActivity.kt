@@ -11,6 +11,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -100,6 +102,21 @@ class MainActivity : AppCompatActivity() {
         showExpiringOnly = intent.getBooleanExtra(EXTRA_SHOW_EXPIRING, false)
         setupRecyclerView()
         observeProducts()
+
+        val fabMargin = resources.getDimensionPixelSize(R.dimen.fab_margin)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.fab) { v, insets ->
+            val navBottom = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+            val lp = v.layoutParams as androidx.coordinatorlayout.widget.CoordinatorLayout.LayoutParams
+            lp.bottomMargin = fabMargin + navBottom
+            v.layoutParams = lp
+            binding.recyclerView.setPadding(
+                binding.recyclerView.paddingLeft,
+                binding.recyclerView.paddingTop,
+                binding.recyclerView.paddingRight,
+                resources.getDimensionPixelSize(R.dimen.recycler_bottom_padding) + navBottom
+            )
+            insets
+        }
 
         binding.fab.setOnClickListener {
             startActivity(Intent(this, AddEditProductActivity::class.java))

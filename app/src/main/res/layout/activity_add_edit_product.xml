@@ -102,6 +102,17 @@
                 android:scaleType="centerCrop"
                 android:visibility="gone" />
 
+            <TextView
+                android:id="@+id/textOffAttribution"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/off_attribution"
+                android:textSize="10sp"
+                android:textColor="?android:attr/textColorSecondary"
+                android:gravity="center"
+                android:visibility="gone" />
+
             <!-- Date section -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"

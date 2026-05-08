@@ -1,5 +1,7 @@
 package com.fabrizioddera.scadenzaprodotti.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.fabrizioddera.scadenzaprodotti.ScadenzaApp
@@ -25,6 +27,10 @@ class SettingsActivity : AppCompatActivity() {
         updateTimeLabel()
 
         binding.btnPickTime.setOnClickListener { showTimePicker() }
+
+        binding.textOffLink.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://world.openfoodfacts.org")))
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

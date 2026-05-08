@@ -91,7 +91,8 @@ class AddEditProductActivity : AppCompatActivity() {
                 if (binding.editName.text.isNullOrBlank()) {
                     binding.editName.setText(product.name)
                 }
-                loadAvatar(product.url)
+                loadAvatar(product.url, fromOff = true)
+                binding.textOffAttribution.visibility = View.VISIBLE
                 Toast.makeText(
                     this@AddEditProductActivity,
                     getString(R.string.toast_product_found, product.name),
@@ -120,15 +121,17 @@ class AddEditProductActivity : AppCompatActivity() {
         updateDateDisplay()
     }
 
-    private fun loadAvatar(url: String?) {
+    private fun loadAvatar(url: String?, fromOff: Boolean = false) {
         currentImageUrl = url?.takeIf { it.isNotEmpty() }
         if (!currentImageUrl.isNullOrEmpty()) {
             binding.imageAvatar.visibility = View.VISIBLE
             binding.imageAvatar.load(currentImageUrl) {
                 transformations(CircleCropTransformation())
             }
+            binding.textOffAttribution.visibility = View.VISIBLE
         } else {
             binding.imageAvatar.visibility = View.GONE
+            if (!fromOff) binding.textOffAttribution.visibility = View.GONE
         }
     }
 

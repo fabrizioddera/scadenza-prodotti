@@ -62,6 +62,12 @@
     <string name="product_opened_with_expiry">Aperto il %1$s · scade %2$s</string>
     <string name="product_opened">Aperto il %1$s</string>
 
+    <!-- Open Food Facts attribution -->
+    <string name="off_attribution">Dati da Open Food Facts (openfoodfacts.org) · licenza ODbL</string>
+    <string name="off_credits_title">Dati prodotti</string>
+    <string name="off_credits_body">I dati sui prodotti (nome, immagine) sono forniti da Open Food Facts, database aperto disponibile su openfoodfacts.org sotto licenza Open Database License (ODbL).</string>
+    <string name="off_credits_link">openfoodfacts.org</string>
+
     <!-- Notifiche -->
     <string name="notification_channel_name">Scadenze prodotti</string>
     <string name="notification_channel_description">Notifiche per prodotti in scadenza</string>

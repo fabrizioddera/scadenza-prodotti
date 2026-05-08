@@ -11,7 +11,7 @@ import com.fabrizioddera.scadenzaprodotti.data.ProductRepository
 import kotlinx.coroutines.launch
 
 class ProductViewModel(app: Application) : AndroidViewModel(app) {
-    private val repo = ProductRepository(AppDatabase.getInstance(app).productDao())
+    private val repo: ProductRepository = ProductRepository(AppDatabase.getInstance(app).productDao())
     val products: LiveData<List<Product>> = repo.allProducts.asLiveData()
 
     fun insert(product: Product) = viewModelScope.launch { repo.insert(product) }
